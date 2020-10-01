@@ -21,11 +21,13 @@ connection.close()
 
 # URL will will be prefixed with "/parser/" before all routes
 @app.route('/')
-def hello_world():     
-    l = ','.join(dbs)
-    return "Here are the databases: {0}".format(l)
-    
+def hello_world():
+    return '<h1>Hello from Flask!</h1>'
 
+@app.route('/dbs')
+def show_dbs():             
+    l = ','.join(dbs)
+    return "Here are the databases: {0}".format(l)   
 
 if __name__ == '__main__':    
     app.run(debug=True, host='0.0.0.0')    
