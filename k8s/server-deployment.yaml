@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: prototype-server-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            component: prototype-server
+    template:
+        metadata:
+            labels:
+                component: prototype-server
+        spec:
+            containers:
+                - name: prototype-server
+                  image: erichodgins/prototype-server
+                  ports:
+                    - containerPort: 3000
+                    

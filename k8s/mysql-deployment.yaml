@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: prototype-mysql-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            component: prototype-mysql
+    template:
+        metadata:
+            labels:
+                component: prototype-mysql
+        spec:
+            volumes:
+                - name: mysql-storage
+                  persistentVolumeClaim:
+                    claimName: mysql-pv-claim
+            containers:
+                - name: prototype-mysql
+                  image: mysql:5.7
+                  ports:
+                    - containerPort: 3306
+                  volumeMounts:
+                    - name: mysql-storage
+                      mountPath: /var/lib/mysql
+                  env:
+                    - name: MYSQL_ROOT_PASSWORD
+                      value: password

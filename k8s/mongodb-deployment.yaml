@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: prototype-mongodb-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            component: prototype-mongodb
+    template:
+        metadata:
+            labels:
+                component: prototype-mongodb
+        spec:
+            volumes:
+                - name: mongodb-storage
+                  persistentVolumeClaim:
+                    claimName: mongo-pv-claim
+            containers:
+                - name: prototype-mongodb
+                  image: mongo
+                  ports:
+                    - containerPort: 27017
+                  volumeMounts:
+                    - name: mongodb-storage
+                      mountPath: /data/db
+                  env:
+                    - name: MONGO_INITDB_ROOT_USERNAME
+                      value: root
+                    - name: MONGO_INITDB_ROOT_PASSWORD
+                      value: password

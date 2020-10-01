@@ -1,0 +1,29 @@
+apiVersion: skaffold/v2beta2
+kind: Config
+build:
+    local:
+        push: false
+    artifacts:
+        - image: erichodgins/prototype-server
+          context: server
+          docker:
+            dockerfile: Dockerfile.dev
+          sync:
+            infer:
+              - '**/*.js' #This is Mode 2. If not here defaults to Mode 1
+        - image: erichodgins/prototype-parser
+          context: parser
+          docker:
+            dockerfile: Dockerfile
+          sync:
+            infer:
+              - '**/**'
+deploy:
+    kubectl:
+        manifests:
+            - ./k8s/*    
+
+
+# Mode 1 - Rebuild image from scratch update K8s
+# Mode 2 - Inject udpated files into pods and 
+# rely on app to automatically update

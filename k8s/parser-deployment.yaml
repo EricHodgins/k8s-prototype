@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: prototype-parser-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            component: prototype-parser
+    template:
+        metadata:
+            labels:
+                component: prototype-parser
+        spec:
+            containers:
+                - name: prototype-parser
+                  image: erichodgins/prototype-parser
+                  ports:
+                    - containerPort: 5000
+                  env:
+                    - name: MYSQL_ROOT_PASSWORD
+                      value: password
+                    
