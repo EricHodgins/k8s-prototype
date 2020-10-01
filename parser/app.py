@@ -4,15 +4,14 @@ import mysql.connector
 
 app = Flask(__name__)
 
-password = os.environ['MYSQL_ROOT_PASSWORD']
-connection = mysql.connector.connect(
-    host='mysql-cluster-ip-service',
-    port=3306,
-    user='root',
-    password=password    
-)
-
 def get_all_databases():
+    password = os.environ['MYSQL_ROOT_PASSWORD']
+    connection = mysql.connector.connect(
+        host='mysql-cluster-ip-service',
+        port=3306,
+        user='root',
+        password=password    
+    )
     cur = connection.cursor()
     cur.execute("SHOW DATABASES")
     dbs = []
